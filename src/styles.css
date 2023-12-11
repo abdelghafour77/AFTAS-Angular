@@ -1,1 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Smooch&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poor+Story&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Delius+Unicase&family=Poor+Story&display=swap');
+
+@import 'assets/css/additional-styles/utillity-patterns.css';
+@import 'assets/css/additional-styles/range-slider.css';
+@import 'assets/css/additional-styles/toggle-switch.css';
+@import 'assets/css/additional-styles/theme.css';
+
 /* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.bg-glass {
+      background: rgba(255, 255, 255, 0.88);
+      /* border-radius: 16px; */
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+
+}
+
+@layer utilities {
+      .rtl {
+            direction: rtl;
+      }
+}
