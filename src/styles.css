@@ -3,10 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poor+Story&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Delius+Unicase&family=Poor+Story&display=swap');
 
-@import 'assets/css/additional-styles/utillity-patterns.css';
-@import 'assets/css/additional-styles/range-slider.css';
-@import 'assets/css/additional-styles/toggle-switch.css';
-@import 'assets/css/additional-styles/theme.css';
+
 
 /* You can add global styles to this file, and also import other style files */
 @tailwind base;
