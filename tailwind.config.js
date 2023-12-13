@@ -4,7 +4,10 @@ module.exports = {
   prefix: '',
   mode: 'jit',
   important: true,
-  content: ["./src/**/*.{html,ts}"],
+  content: [
+    "./src/**/*.{html,ts}",
+    "./node_modules/flowbite/**/*.js"
+  ],
   darkMode: 'class',
   theme: {
 
@@ -72,6 +75,7 @@ module.exports = {
     scrollbar: ['dark', 'rounded']
   },
   plugins: [
+    require('flowbite/plugin'),
     require('@tailwindcss/forms'),
     require('@tailwindcss/typography'),
     require('@tailwindcss/aspect-ratio'),
