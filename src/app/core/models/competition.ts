@@ -6,7 +6,9 @@ export interface Competition {
       startTime?: Date;
       endTime?: Date;
       numberOfParticipants?: number;
+      numberOfParticipantsRegistered?: number;
       location?: string;
+      status?: string;
       price?: number;
       description?: string;
 
@@ -20,7 +22,9 @@ export class CCompetition implements Competition {
             public date?: Date,
             public startTime?: Date,
             public endTime?: Date,
-            public numberOfParticipants?: number,
+            public status?: string,
+            public numberOfParticipantsRegistered?: number,
+            public numberOfParticipantsMax?: number,
             public location?: string,
             public price?: number,
             public description?: string
