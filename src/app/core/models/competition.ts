@@ -1,3 +1,6 @@
+import { publishFacade } from "@angular/compiler";
+import { Ranking } from "./ranking";
+
 export interface Competition {
       id?: number;
       code?: string;
@@ -11,6 +14,7 @@ export interface Competition {
       status?: string;
       price?: number;
       description?: string;
+      rankings?: Ranking[];
 
 }
 
@@ -27,6 +31,7 @@ export class CCompetition implements Competition {
             public numberOfParticipantsMax?: number,
             public location?: string,
             public price?: number,
-            public description?: string
+            public description?: string,
+            public ranking?: Ranking[]
       ) { }
 }
