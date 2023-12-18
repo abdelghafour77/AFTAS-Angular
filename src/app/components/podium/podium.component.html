@@ -1,20 +1,23 @@
-<h1 class="text-center text-3xl font-bold mt-4">Podium & Winners</h1>
+<h1 class="text-center text-3xl font-bold mt-4">Podium</h1>
 
 <div class="flex justify-center items-end min-h-[80vh]" id="podium">
       <div>
-            <h2 class="my-4 text-center">li ja 2</h2>
+            <h2 class="my-4 text-center font-bold">{{topThree[1].member.firstName}} {{topThree[1].member.lastName}}</h2>
+            <h2 class="my4 text-center">{{topThree[1].score}}</h2>
             <div class="w-64 h-32 bg-yellow-600 pt-10">
                   <h1 class="font-bold text-3xl text-white text-center">2</h1>
             </div>
       </div>
       <div>
-            <h2 class="my-4 text-center"> li ja 1</h2>
+            <h2 class="my-4 text-center font-bold">{{topThree[0].member.firstName}} {{topThree[0].member.lastName}}</h2>
+            <h2 class="my4 text-center">{{topThree[0].score}}</h2>
             <div class="w-64 h-48 bg-yellow-400 pt-10">
                   <h1 class="font-bold text-3xl text-white text-center">1</h1>
             </div>
       </div>
       <div>
-            <h2 class="my-4 text-center">li ja 3</h2>
+            <h2 class="my-4 text-center font-bold">{{topThree[2].member.firstName}} {{topThree[2].member.lastName}}</h2>
+            <h2 class="my4 text-center">{{topThree[2].score}}</h2>
             <div class="w-64 h-20 bg-yellow-800 pt-7">
                   <h1 class="font-bold text-3xl text-white text-center">3</h1>
             </div>

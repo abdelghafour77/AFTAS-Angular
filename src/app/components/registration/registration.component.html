@@ -4,13 +4,16 @@
                   <div class="flex justify-between align-middle gap-3 py-2 px-4">
                         <div class="flex gap-4 py-2">
                               <label class="block w-full">
-                                    <select
+                                    <select name="competition" id="competition" [(ngModel)]="selectedCompetition"
+                                          (change)="getMembersNotRegistered()"
                                           class="block w-full mt-1 rounded-md bg-gray-50 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0">
                                           <option disabled selected> Competition </option>
-                                          <option>Corporate event</option>
-                                          <option>Wedding</option>
-                                          <option>Birthday</option>
-                                          <option>Other</option>
+                                          @for (competition of competitions; track $index) {
+                                          <option [value]="competition.code">{{competition.name}}</option>
+                                          }
+                                          @empty {
+                                          <option disabled>Vide</option>
+                                          }
                                     </select>
                               </label>
                         </div>
@@ -29,7 +32,8 @@
 
                                     </span>
 
-                                    <input type="search" placeholder="Recherche" autocomplete="off" class=" block w-full py-2.5 text-gray-700 placeholder-gray-400/70 bg-white border
+                                    <input [formControl]="searchControl" type="search" placeholder="Recherche"
+                                          autocomplete="off" class=" block w-full py-2.5 text-gray-700 placeholder-gray-400/70 bg-white border
                                     border-gray-200 rounded-lg pl-11 pr-5 rtl:pr-11 rtl:pl-5 dark:bg-gray-900
                                     dark:text-gray-300 dark:border-gray-600 focus:border-blue-400
                                     dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring
@@ -53,6 +57,7 @@
 
 
             </button>
+            @for (member of members; track $index) {
             <div
                   class="w-60 p-2 h-[300px] bg-white rounded-xl transform transition-all hover:-translate-y-2 duration-300 shadow-lg hover:shadow-2xl">
                   <!-- Image -->
@@ -60,24 +65,26 @@
                         alt="Les Paul Special">
                   <div class="p-2">
                         <!-- Heading -->
-                        <h2 class="font-bold text-lg mb-2 truncate" title="Les Paul Special">Abdelghafour aouad</h2>
-                        <h2 class="text-xs mb-2 ">User</h2>
-                        <!-- Description -->
-                        <!-- <p class="text-sm text-gray-600 truncate h-10"
-                              title=" The Les Paul Special returns to the classic design that made it relevant.">
-                              The Les Paul Special returns to the classic design that made it relevant.
-                        </p> -->
+                        <h2 class="font-bold text-lg mb-2 truncate" title="Les Paul Special">{{member.firstName}}
+                              {{member.lastName}}</h2>
+                        <h2 class="text-xs mb-2 ">{{member.identityNumber}}</h2>
+
                   </div>
                   <!-- CTA -->
                   <div class="m-2 flex justify-between">
                         <h2 class="font-bold"></h2>
-                        <a role="button" href="#"
+                        <button (click)="registerMember(member.id)"
                               class="text-white bg-yellow-500 px-3 py-1 rounded-md hover:bg-yellow-600">
                               Add
-                        </a>
+                        </button>
                   </div>
             </div>
-
+            }
+            @empty {
+            <div class="text-center font-semibold text-xl">
+                  Choisir une competition
+            </div>
+            }
       </div>
 
 </div>
@@ -105,18 +112,18 @@
                         </button>
                   </div>
                   <!-- Modal body -->
-                  <div class="p-4 md:p-5 space-y-4">
+                  <form class="p-4 md:p-5 space-y-4" (submit)="onSubmit()">
                         <div class="flex flex-col">
                               <label class="block text-sm">
                                     <span class="text-gray-700 dark:text-gray-400">Nom</span>
-                                    <input
+                                    <input [(ngModel)]="toSave.firstName" name="firstName" ngModel
                                           class="block w-full mt-1 rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0">
                               </label>
                         </div>
                         <div class="flex flex-col">
                               <label class="block text-sm">
                                     <span class="text-gray-700 dark:text-gray-400">Prenom</span>
-                                    <input
+                                    <input [(ngModel)]="toSave.lastName" name="lastName" ngModel
                                           class="block w-full mt-1 rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0">
                               </label>
                         </div>
@@ -124,36 +131,45 @@
                               <label class="block text-sm">
                                     <span
                                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nationalité</span>
-                                    <select name="" id=""
+                                    <select [(ngModel)]="toSave.nationality" name="nationality" ngModel
                                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                           <option selected disabled>Sélectionner la nationalité</option>
-                                          <option value="">Maroc</option>
-                                          <option value="">Algerie</option>
-                                          <option value="">Tunisie</option>
-                                          <option value="">Egypte</option>
+                                          <option value="Maroc">Maroc</option>
+                                          <option value="Algerie">Algerie</option>
+                                          <option value="Tunisie">Tunisie</option>
+                                          <option value=" Egypte">Egypte</option>
+                                    </select>
+                              </label>
+                        </div>
+                        <div class="flex flex-col">
+                              <label class="block text-sm">
+                                    <span class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                          Type de document
+                                    </span>
+                                    <select [(ngModel)]="toSave.identityDocumentType" name="identityDocumentType"
+                                          ngModel
+                                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                          <option selected disabled>Sélectionner le type de document</option>
+                                          <option value="1" [ngValue]="1">Passport</option>
+                                          <option value="2" [ngValue]="2">CIN</option>
+                                          <option value="3" [ngValue]="3">Permis de conduire</option>
+                                          <option value="4" [ngValue]="4">Carte de séjour</option>
                                     </select>
                               </label>
                         </div>
                         <div class="flex flex-col">
                               <label class="block text-sm">
                                     <span class="text-gray-700 dark:text-gray-400">Numéro d'identité</span>
-                                    <input type="text"
+                                    <input type="text" [(ngModel)]="toSave.identityNumber" name="identityNumber" ngModel
                                           class="block w-full mt-1 rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0">
                               </label>
                         </div>
-                        <label class="block">
-                              <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                    for="identity_document">
-                                    Document d'identité
-                              </label>
-                              <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                                    aria-describedby="identity_document" id="identity_document" type="file">
-                        </label>
+
 
                         <!-- Modal footer -->
                         <div
                               class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                              <button data-modal-hide="default-modal" type="button"
+                              <button data-modal-hide="default-modal" type="submit"
                                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                     Ajoute
                               </button>
@@ -162,7 +178,7 @@
                                     Annuler
                               </button>
                         </div>
-                  </div>
+                  </form>
             </div>
       </div>
 </div>
