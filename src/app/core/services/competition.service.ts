@@ -43,16 +43,35 @@ export class CompetitionService {
     return this.http.get<Competition[]>(url);
   }
 
-  getCompetitionsByCode(code: string): Observable<Ranking[]> {
-    const url = `${this.apiUrl}/code/${code}`;
-    return this.http.get<Member>(url).pipe(map(result => result.rankings));
-  }
+  // getCompetitionsByCode(code: string): Observable<Ranking[]> {
+  //   const url = `${this.apiUrl}/code/${code}`;
+  //   return this.http.get<Member>(url).pipe(map(result => result.rankings));
+  // }
 
   registerMemberToCompetition(competitionCode: string, memberId: number): Observable<Competition> {
     console.log("competitionCode: " + competitionCode);
     const url = `${this.apiUrl}/register/${competitionCode}/${memberId}`;
     return this.http.put<Competition>(url, httpOptions);
 
+  }
+
+  getMembersNotRegistered(code: string): Observable<Member[]> {
+    const url = `${this.apiUrl}/registered-members/${code}`;
+    return this.http.get<Member[]>(url);
+  }
+  getMembersNotRegisterdWithSearch(code: string, criteria: string): Observable<Member[]> {
+    const url = `${this.apiUrl}/registered-members/${code}/${criteria}`;
+    return this.http.get<Member[]>(url);
+  }
+
+  getCompetition(code: string): Observable<Competition> {
+    const url = `${this.apiUrl}/code/${code}`;
+    return this.http.get<Competition>(url);
+  }
+
+  getTopThree(code: string): Observable<Ranking[]> {
+    const url = `${this.apiUrl}/topThree/${code}`;
+    return this.http.get<Ranking[]>(url);
   }
 
 }
