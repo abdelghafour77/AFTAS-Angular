@@ -4,8 +4,7 @@
                   <div class="flex justify-between align-middle gap-3 py-2 px-4">
                         <div class="flex gap-4 py-2">
                               <label class="block w-full">
-                                    <select name="competition" id="competition" [(ngModel)]="selectedCompetition"
-                                          (change)="getMembersNotRegistered()"
+                                    <select name="competition" id="competition" [(ngModel)]="selectedCompetition" (change)="getMembersNotRegistered()"
                                           class="block w-full mt-1 rounded-md bg-gray-50 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0">
                                           <option disabled selected> Competition </option>
                                           @for (competition of competitions; track $index) {
@@ -23,17 +22,13 @@
                               <div class="relative flex items-center">
                                     <span class="absolute">
 
-                                          <svg xmlns="http://www.w3.org/2000/svg"
-                                                class="w-6 h-6 mx-3 text-gray-400 dark:text-gray-500" fill="none"
-                                                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                      d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                                          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mx-3 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                                           </svg>
 
                                     </span>
 
-                                    <input [formControl]="searchControl" type="search" placeholder="Recherche"
-                                          autocomplete="off" class=" block w-full py-2.5 text-gray-700 placeholder-gray-400/70 bg-white border
+                                    <input [formControl]="searchControl" type="search" placeholder="Recherche" autocomplete="off" class=" block w-full py-2.5 text-gray-700 placeholder-gray-400/70 bg-white border
                                     border-gray-200 rounded-lg pl-11 pr-5 rtl:pr-11 rtl:pl-5 dark:bg-gray-900
                                     dark:text-gray-300 dark:border-gray-600 focus:border-blue-400
                                     dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring
@@ -47,22 +42,17 @@
       <div class="py-10 w-full min-h-max gap-4 flex-wrap flex justify-center items-center">
             <button data-modal-target="default-modal" data-modal-toggle="default-modal"
                   class="w-60 p-2 h-[300px] flex flex-nowrap flex-col items-center justify-between bg-white rounded-xl transform transition-all hover:-translate-y-2 duration-300 ease-in-out shadow-lg hover:shadow-2xl hover:bg-slate-100 group ">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor"
-                        class="w-48 h-48 text-slate-300 text-center mx-auto group-hover:text-slate-400">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                              d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-48 h-48 text-slate-300 text-center mx-auto group-hover:text-slate-400">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   <p class="text-center font-bold text-lg text-slate-500 pb-12"> Ajoute nouveau membre </p>
 
 
             </button>
             @for (member of members; track $index) {
-            <div
-                  class="w-60 p-2 h-[300px] bg-white rounded-xl transform transition-all hover:-translate-y-2 duration-300 shadow-lg hover:shadow-2xl">
+            <div class="w-60 p-2 h-[300px] bg-white rounded-xl transform transition-all hover:-translate-y-2 duration-300 shadow-lg hover:shadow-2xl">
                   <!-- Image -->
-                  <img class="h-40 bg-slate-300 mx-auto object-cover rounded-full" src="./assets/img/avatar.png"
-                        alt="Les Paul Special">
+                  <img class="h-40 bg-slate-300 mx-auto object-cover rounded-full" src="./assets/img/avatar.png" alt="Les Paul Special">
                   <div class="p-2">
                         <!-- Heading -->
                         <h2 class="font-bold text-lg mb-2 truncate" title="Les Paul Special">{{member.firstName}}
@@ -73,8 +63,7 @@
                   <!-- CTA -->
                   <div class="m-2 flex justify-between">
                         <h2 class="font-bold"></h2>
-                        <button (click)="registerMember(member.id)"
-                              class="text-white bg-yellow-500 px-3 py-1 rounded-md hover:bg-yellow-600">
+                        <button (click)="registerMember(member.id)" class="text-white bg-yellow-500 px-3 py-1 rounded-md hover:bg-yellow-600">
                               Add
                         </button>
                   </div>
@@ -90,8 +79,7 @@
 </div>
 
 <!-- Main modal -->
-<div id="default-modal" tabindex="-1" aria-hidden="true"
-      class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+<div id="default-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
       <div class="relative p-4 w-full max-w-2xl max-h-full">
             <!-- Modal content -->
             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -103,10 +91,8 @@
                         <button type="button"
                               class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
                               data-modal-hide="default-modal">
-                              <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                    viewBox="0 0 14 14">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                          stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                              <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
                               </svg>
                               <span class="sr-only">Close modal</span>
                         </button>
@@ -116,21 +102,18 @@
                         <div class="flex flex-col">
                               <label class="block text-sm">
                                     <span class="text-gray-700 dark:text-gray-400">Nom</span>
-                                    <input [(ngModel)]="toSave.firstName" name="firstName" ngModel
-                                          class="block w-full mt-1 rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0">
+                                    <input [(ngModel)]="toSave.firstName" name="firstName" ngModel class="block w-full mt-1 rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0">
                               </label>
                         </div>
                         <div class="flex flex-col">
                               <label class="block text-sm">
                                     <span class="text-gray-700 dark:text-gray-400">Prenom</span>
-                                    <input [(ngModel)]="toSave.lastName" name="lastName" ngModel
-                                          class="block w-full mt-1 rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0">
+                                    <input [(ngModel)]="toSave.lastName" name="lastName" ngModel class="block w-full mt-1 rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0">
                               </label>
                         </div>
                         <div class="flex flex-col">
                               <label class="block text-sm">
-                                    <span
-                                          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nationalité</span>
+                                    <span class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nationalité</span>
                                     <select [(ngModel)]="toSave.nationality" name="nationality" ngModel
                                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                           <option selected disabled>Sélectionner la nationalité</option>
@@ -146,8 +129,7 @@
                                     <span class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                           Type de document
                                     </span>
-                                    <select [(ngModel)]="toSave.identityDocumentType" name="identityDocumentType"
-                                          ngModel
+                                    <select [(ngModel)]="toSave.identityDocumentType" name="identityDocumentType" ngModel
                                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                           <option selected disabled>Sélectionner le type de document</option>
                                           <option value="1" [ngValue]="1">Passport</option>
@@ -167,8 +149,7 @@
 
 
                         <!-- Modal footer -->
-                        <div
-                              class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+                        <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
                               <button data-modal-hide="default-modal" type="submit"
                                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                     Ajoute

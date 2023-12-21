@@ -8,6 +8,7 @@ import { Competition } from '../../core/models/competition';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Flowbite } from '../../core/config/flowbite-config';
 
 @Component({
   selector: 'app-registration',
@@ -20,6 +21,7 @@ import { Router } from '@angular/router';
   templateUrl: './registration.component.html',
   styleUrl: './registration.component.css'
 })
+@Flowbite()
 export class RegistrationComponent implements OnInit {
   toSave: Member = new CMember(1);
   selectedCompetition: string = '';
