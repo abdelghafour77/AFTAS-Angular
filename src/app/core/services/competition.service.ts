@@ -4,6 +4,7 @@ import { Observable, map } from 'rxjs';
 import { Competition } from '../models/competition';
 import { Member } from '../models/member';
 import { Ranking } from '../models/ranking';
+import { CompetitionPage } from '../models/competitionPage';
 
 
 const httpOptions = {
@@ -23,6 +24,10 @@ export class CompetitionService {
   getCompetitions(): Observable<Competition[]> {
     return this.http.get<Competition[]>(this.apiUrl);
   }
+  getPaginateCompetitions(page: number): Observable<CompetitionPage> {
+    const url = `${this.apiUrl}/pageable?page=${page}&size=4`;
+    return this.http.get<CompetitionPage>(url);
+  }
 
   // getCompetition(id: number): Observable<Competition> {
   //   const url = `${this.apiUrl}/${id}`;
@@ -38,9 +43,19 @@ export class CompetitionService {
     return this.http.get<Competition[]>(url);
   }
 
+  searchByCriteriaPaginate(criteria: string, page: number): Observable<CompetitionPage> {
+    const url = `${this.apiUrl}/search/${criteria}?page=${page}&size=4`;
+    return this.http.get<CompetitionPage>(url);
+  }
+
   getCompetitionsByStatus(status: string): Observable<Competition[]> {
     const url = `${this.apiUrl}/status/${status}`;
     return this.http.get<Competition[]>(url);
+  }
+
+  getCompetitionsByStatusPaginate(status: string, page: number): Observable<CompetitionPage> {
+    const url = `${this.apiUrl}/status/${status}?page=${page}&size=4`;
+    return this.http.get<CompetitionPage>(url);
   }
 
   // getCompetitionsByCode(code: string): Observable<Ranking[]> {
