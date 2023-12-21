@@ -3,17 +3,13 @@
             <div class="bg-slate-300 rounded-2xl">
                   <div class="flex justify-between align-middle gap-3 py-2 px-4">
                         <div class="flex gap-4 py-2">
-                              <button (click)="getCompetitionsByStatus('all')"
-                                    [ngClass]="{'bg-slate-400': activeStatus === 'all', 'bg-slate-600': activeStatus !== 'all'}"
+                              <button (click)="getCompetitionsByStatus('all')" [ngClass]="{'bg-slate-400': activeStatus === 'all', 'bg-slate-600': activeStatus !== 'all'}"
                                     class="rounded-2xl p-2 text-white hover:bg-slate-500">Tous</button>
-                              <button (click)="getCompetitionsByStatus('upcoming')"
-                                    [ngClass]="{'bg-slate-400': activeStatus === 'upcoming', 'bg-slate-600': activeStatus !== 'upcoming'}"
+                              <button (click)="getCompetitionsByStatus('upcoming')" [ngClass]="{'bg-slate-400': activeStatus === 'upcoming', 'bg-slate-600': activeStatus !== 'upcoming'}"
                                     class="rounded-2xl p-2 text-white hover:bg-slate-500">A venir</button>
-                              <button (click)="getCompetitionsByStatus('ongoing')"
-                                    [ngClass]="{'bg-slate-400': activeStatus === 'ongoing', 'bg-slate-600': activeStatus !== 'ongoing'}"
+                              <button (click)="getCompetitionsByStatus('ongoing')" [ngClass]="{'bg-slate-400': activeStatus === 'ongoing', 'bg-slate-600': activeStatus !== 'ongoing'}"
                                     class="rounded-2xl p-2 text-white hover:bg-slate-500">En cours</button>
-                              <button (click)="getCompetitionsByStatus('finished')"
-                                    [ngClass]="{'bg-slate-400': activeStatus === 'finished', 'bg-slate-600': activeStatus !== 'finished'}"
+                              <button (click)="getCompetitionsByStatus('finished')" [ngClass]="{'bg-slate-400': activeStatus === 'finished', 'bg-slate-600': activeStatus !== 'finished'}"
                                     class="rounded-2xl p-2 text-white hover:bg-slate-500">Terminé</button>
                         </div>
                         <div class="flex">
@@ -22,17 +18,13 @@
                               <div class="relative flex items-center">
                                     <span class="absolute">
 
-                                          <svg xmlns="http://www.w3.org/2000/svg"
-                                                class="w-6 h-6 mx-3 text-gray-400 dark:text-gray-500" fill="none"
-                                                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                      d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                                          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mx-3 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                                           </svg>
 
                                     </span>
 
-                                    <input [formControl]="searchControl" type="search" placeholder="Recherche"
-                                          autocomplete="off" class=" block w-full py-2.5 text-gray-700 placeholder-gray-400/70 bg-white border
+                                    <input [formControl]="searchControl" type="search" placeholder="Recherche" autocomplete="off" class=" block w-full py-2.5 text-gray-700 placeholder-gray-400/70 bg-white border
                                     border-gray-200 rounded-lg pl-11 pr-5 rtl:pr-11 rtl:pl-5 dark:bg-gray-900
                                     dark:text-gray-300 dark:border-gray-600 focus:border-blue-400
                                     dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring
@@ -44,12 +36,15 @@
       </div>
 
       <div class="py-10 w-full min-h-max gap-4 flex-wrap flex justify-center items-center">
-            @for (competition of competitions; track $index) {
-            <div
-                  class="w-60 p-2 bg-white rounded-xl transform transition-all hover:-translate-y-2 duration-300 shadow-lg hover:shadow-2xl">
+            @for (competition of competitions.content; track $index) {
+            <div class="w-60 p-2 bg-white rounded-xl transform transition-all hover:-translate-y-2 duration-300 shadow-lg hover:shadow-2xl">
                   <!-- Image -->
-                  <img class="h-40 mx-auto object-cover rounded-xl" src="./assets/img/competition.jpg"
-                        alt="{{competition.name}}">
+                  <img class="h-40 mx-auto object-cover rounded-xl" src="./assets/img/competition.jpg" alt="{{competition.name}}">
+
+                  <div class="position absolute top-3 right-3 rounded-lg text-xs py-1 px-2"
+                        [ngClass]="{'bg-gray-300':competition.status=='finished','bg-blue-400':competition.status=='ongoing','bg-orange-500':competition.status=='upcoming'}">
+                        {{(competition.status=='finished')?'Terminé' :(competition.status=='upcoming')?'A venir':'En cours'}}
+                  </div>
                   <div class="p-2">
                         <!-- Heading -->
                         <h2 class="font-bold text-lg mb-2 truncate" title="{{competition.name}}">{{competition.name}}
@@ -66,9 +61,7 @@
                               {{competition.price}} MAD
                               <!-- {{competition.nbParticipants}} / {{competition.nbParticipantsMax}} -->
                         </h2>
-                        <button (click)="selectCompetition(competition)" data-modal-target="competition-info"
-                              data-modal-toggle="competition-info"
-                              class="text-white bg-yellow-500 px-3 py-1 rounded-md hover:bg-yellow-600">Plus</button>
+                        <button [routerLink]="['/competition/'+competition.code ]" class="text-white bg-yellow-500 px-3 py-1 rounded-md hover:bg-yellow-600">Plus</button>
                   </div>
             </div>
             }
@@ -77,110 +70,92 @@
                   <h1 class="text-2xl text-gray-500">Aucune compétition</h1>
             </div>
             }
-      </div>
-</div>
 
-<!-- Main modal -->
-<div id="competition-info" tabindex="-1" aria-hidden="true"
-      class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-      <div class="relative p-4 w-full max-w-2xl max-h-full">
-            <!-- Modal content -->
-            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                  <!-- Modal header -->
-                  <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                              Info sur la compétition
-                        </h3>
-                        <button type="button"
-                              class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                              data-modal-hide="competition-info">
-                              <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                    viewBox="0 0 14 14">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                          stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+
+      </div>
+      <nav class="">
+            <ul class="flex items-center -space-x-px h-10 text-base justify-center">
+                  <li>
+                        <a (click)="getCompetitions(page-1)"
+                              class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                              <span class="sr-only">Previous</span>
+                              <svg class="w-3 h-3 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4" />
                               </svg>
-                              <span class="sr-only">
-                                    Fermer
-                              </span>
-                        </button>
-                  </div>
-                  <!-- Modal body -->
-                  <div class="p-4 md:p-5 space-y-4">
-                        <div class="flex flex-col">
-                              <label class="block">
-                                    <span class="font-semibold text-gray-700 dark:text-gray-400">
-                                          Nom:
-                                    </span>
-                                    <span>{{currentCompetition?.name}}</span>
-                              </label>
-                              <label class="block">
-                                    <span class="font-semibold text-gray-700 dark:text-gray-400">
-                                          Lieu:
-                                    </span>
-                                    <span>{{currentCompetition?.location}}</span>
-
-                              </label>
-                              <label class="block">
-                                    <span class="font-semibold text-gray-700 dark:text-gray-400">
-                                          Code:
-                                    </span>
-                                    <span>{{currentCompetition?.code}}</span>
-
-                              </label>
-                              <label class="block">
-                                    <span class="font-semibold text-gray-700 dark:text-gray-400">
-                                          Date:
-                                    </span>
-                                    <span>{{currentCompetition?.date}}</span>
-
-                              </label>
-                              <label class="block">
-                                    <span class="font-semibold text-gray-700 dark:text-gray-400">
-                                          Début:
-                                    </span>
-                                    <span>{{currentCompetition?.startTime}}</span>
-
-                              </label>
-
-                              <label class="block">
-                                    <span class="font-semibold text-gray-700 dark:text-gray-400">
-                                          Fin:
-                                    </span>
-                                    <span>{{currentCompetition?.endTime}}</span>
-
-                              </label>
-
-                              <label class="block">
-                                    <span class="font-semibold text-gray-700 dark:text-gray-400">
-                                          Prix:
-                                    </span>
-                                    <span>{{currentCompetition?.price}} MAD</span>
-
-                              </label>
-
-                              <label class="block">
-                                    <span class="font-semibold text-gray-700 dark:text-gray-400">
-                                          Description:
-                                    </span>
-                                    <span>{{currentCompetition?.description}}</span>
-
-                              </label>
-
-                              <label class="block">
-                                    <span class="font-semibold text-gray-700 dark:text-gray-400">
-                                          Nombre de participants:
-                                    </span>
-                                    <span>
-                                          {{currentCompetition?.numberOfParticipantsRegistered}}/{{currentCompetition?.numberOfParticipants}}
-                                    </span>
-
-                              </label>
-
-                        </div>
-
-
-
-                  </div>
-            </div>
-      </div>
+                        </a>
+                  </li>
+                  @if (competitions.totalPages > 0) {
+                  <li>
+                        @if(page!=0){
+                        <a (click)="getCompetitions(0)"
+                              class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
+                        }@else {
+                        <a (click)="getCompetitions(0)"
+                              class="z-10 flex items-center justify-center px-4 h-10 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">1</a>
+                        }
+                  </li>
+                  }
+                  @if (competitions.totalPages > 1) {
+                  <li>
+                        @if(page!=1){
+                        <a (click)="getCompetitions(1)"
+                              class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
+                        }@else {
+                        <a (click)="getCompetitions(1)"
+                              class="z-10 flex items-center justify-center px-4 h-10 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">2</a>
+                        }
+                  </li>
+                  }
+                  @if (competitions.totalPages > 2) {
+                  <li>
+                        @if (page!=2){
+                        <a (click)="getCompetitions(2)"
+                              class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">3</a>
+                        }@else {
+                        <a (click)="getCompetitions(2)"
+                              class="z-10 flex items-center justify-center px-4 h-10 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
+                        }
+                  </li>
+                  }@if (competitions.totalPages > 3) {
+                  <li>
+                        @if (page!=3) {
+                        <a (click)="getCompetitions(3)"
+                              class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">4</a>
+                        }@else {
+                        <a (click)="getCompetitions(3)"
+                              class="z-10 flex items-center justify-center px-4 h-10 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">4</a>
+                        }
+                  </li>
+                  }@if (competitions.totalPages > 4) {
+                  <li>
+                        @if (page!=4) {
+                        <a (click)="getCompetitions(4)"
+                              class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">5</a>
+                        }@else {
+                        <a (click)="getCompetitions(4)"
+                              class="z-10 flex items-center justify-center px-4 h-10 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">5</a>
+                        }
+                  </li>
+                  }@if (competitions.totalPages > 5) {
+                  <li>
+                        @if (page!=5) {
+                        <a (click)="getCompetitions(5)"
+                              class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">6</a>
+                        }@else {
+                        <a (click)="getCompetitions(5)"
+                              class="z-10 flex items-center justify-center px-4 h-10 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">6</a>
+                        }
+                  </li>
+                  }
+                  <li>
+                        <a (click)="getCompetitions(page+1)"
+                              class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                              <span class="sr-only">Next</span>
+                              <svg class="w-3 h-3 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
+                              </svg>
+                        </a>
+                  </li>
+            </ul>
+      </nav>
 </div>
