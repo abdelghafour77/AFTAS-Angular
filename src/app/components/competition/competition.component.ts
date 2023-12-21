@@ -8,8 +8,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CHunting, Hunting } from '../../core/models/hunting';
 import { HuntingService } from '../../core/services/hunting.service';
+import { NotificationService } from '../../core/services/notification.service';
 import { Fish } from '../../core/models/fish';
 import { FishService } from '../../core/services/fish.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Flowbite } from '../../core/config/flowbite-config';
 
 @Component({
   selector: 'app-competition',
@@ -23,6 +26,7 @@ import { FishService } from '../../core/services/fish.service';
   templateUrl: './competition.component.html',
   styleUrl: './competition.component.css'
 })
+@Flowbite()
 export class CompetitionComponent implements OnInit {
 
   toSave: Hunting = new CHunting();
@@ -34,11 +38,20 @@ export class CompetitionComponent implements OnInit {
   member: Member = new CMember(0);
   memberId?: number;
 
-  constructor(private route: ActivatedRoute, private competitionService: CompetitionService, private huntingService: HuntingService, private fishService: FishService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private competitionService: CompetitionService,
+    private huntingService: HuntingService,
+    private fishService: FishService,
+    private notificationService: NotificationService
+  ) { }
 
   ngOnInit(): void {
     this.code = this.route.snapshot.params['code'];
-    this.fishService.getFishes().subscribe(fishes => this.fishes = fishes);
+    this.fishService.getFishes().subscribe(
+      fishes => this.fishes = fishes,
+      HttpErrorResponse => this.notificationService.show(HttpErrorResponse.error, 'error')
+    );
     this.loadMembers();
 
 
@@ -62,15 +75,20 @@ export class CompetitionComponent implements OnInit {
     this.toSave.competitionId = this.competition.id;
     this.toSave.memberId = this.memberId;
 
-    this.huntingService.createHunting(this.toSave).subscribe({
-      next: data => {
+    this.huntingService.createHunting(this.toSave).subscribe(
+
+      (data) => {
         console.log(data);
         this.loadMembers();
         // this.router.navigate(['/registration']);
         // this.getMembersNotRegistered();
       },
-      error: (err) => { console.log(err) }
-    })
+      (HttpErrorResponse) => {
+        this.notificationService.show(HttpErrorResponse.error, "error")
+        console.log("Development Purpose Error :" + HttpErrorResponse.error)
+
+      }
+    )
   }
 
 }
